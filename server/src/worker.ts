@@ -1,0 +1,65 @@
+import { Worker } from "bullmq";
+import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
+import { CharacterTextSplitter } from "@langchain/textsplitters";
+import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
+import { TaskType } from "@google/generative-ai";
+import { QdrantVectorStore } from "@langchain/qdrant";
+import path from "path";
+import { v4 as uuidv4 } from "uuid";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+
+const worker = new Worker(
+  "file-upload-q",
+  async (job) => {
+    const data = JSON.parse(job.data);
+    console.log("Data", data);
+
+    const fileName = path.basename(data.fileName, path.extname(data.fileName));
+    const collectionId = `${fileName.replace(/[^a-zA-Z0-9_-]/g, '_')}_${uuidv4()}`;
+    console.log(`Creating collection: ${collectionId}`);
+    
+
+    // 1. Load the PDF document
+    const loader = new PDFLoader(data.filePath);
+    const docs = await loader.load();
+    console.log("Docs", docs);
+    
+    const textSplitter = new CharacterTextSplitter({
+      chunkSize: 1000,
+      chunkOverlap: 200,
+    });
+    let allChunks = [];
+    for (const doc of docs) {
+      const chunks = await textSplitter.splitText(doc.pageContent);
+      allChunks.push(...chunks);
+    }
+    console.log("All Chunks", allChunks);
+
+
+    console.log("start embedding");
+    const embeddings = new GoogleGenerativeAIEmbeddings({
+      model: "text-embedding-004", // 768 dimensions
+      taskType: TaskType.RETRIEVAL_DOCUMENT,
+      title: "Document title",
+      apiKey: process.env.GOOGLE_API_KEY,
+    });    
+    // const vectors = await embeddings.embedDocuments(allChunks);
+    // console.log("Vectors", vectors);
+
+    const vectorStore = await QdrantVectorStore.fromExistingCollection(embeddings, {
+      url: "http://localhost:6333",
+      collectionName: collectionId,
+    });
+
+    await vectorStore.addDocuments(docs);
+    console.log("Added documents to Qdrant");
+
+
+
+
+  },
+  { concurrency: 100, connection: { host: "localhost", port: 6379 } }
+);

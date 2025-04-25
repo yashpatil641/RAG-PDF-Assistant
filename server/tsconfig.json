@@ -11,6 +11,6 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*", "../worker.ts"],
+  "include": ["src/**/*", "src/worker.ts"],
   "exclude": ["node_modules"]
 }
