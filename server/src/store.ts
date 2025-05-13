@@ -1,6 +1,5 @@
 import { WeaviateStore } from "@langchain/weaviate";
 import weaviate, { ApiKey } from "weaviate-ts-client";
-import type { Document } from "@langchain/core/documents";
 import dotenv from "dotenv";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { TaskType } from "@google/generative-ai";

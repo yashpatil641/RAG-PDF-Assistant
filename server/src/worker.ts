@@ -1,15 +1,8 @@
 import { Worker } from "bullmq";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
-import { CharacterTextSplitter } from "@langchain/textsplitters";
-import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
-import { TaskType } from "@google/generative-ai";
-import { QdrantVectorStore } from "@langchain/qdrant";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
-import { WeaviateStore } from "@langchain/weaviate";
-import weaviate, { ApiKey } from "weaviate-ts-client";
-import type { Document } from "@langchain/core/documents";
 import { weaviateStore } from "./store";
 
 
