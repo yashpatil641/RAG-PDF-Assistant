@@ -114,7 +114,8 @@ export default function Chat() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-70px)] bg-neutral-50 dark:bg-neutral-950">
-        {/* File upload trigger + counter */}
+      {/* Header with file upload */}
+      <div className="p-4 border-b border-neutral-200 dark:border-neutral-800">
         <div className="flex items-center">
           {uploadedFiles.length > 0 && (
             <button 
@@ -155,7 +156,7 @@ export default function Chat() {
         </div>
       </div>
       
-      {/* Main chat area */}
+      {/* Chat messages area */}
       <div className="flex-1 overflow-auto">
         <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
           {messages.map((msg, index) => (
@@ -238,9 +239,9 @@ export default function Chat() {
         </div>
       </div>
 
-      {/* File chips - Simplified floating design */}
+      {/* Uploaded files chips */}
       {uploadedFiles.length > 0 && (
-        <div className="px-6 py-3 flex items-center overflow-x-auto whitespace-nowrap">
+        <div className="px-6 py-3 flex items-center overflow-x-auto whitespace-nowrap border-t border-neutral-200 dark:border-neutral-800">
           <div className="flex space-x-2">
             {uploadedFiles.map((file, index) => (
               <div 
@@ -262,8 +263,8 @@ export default function Chat() {
         </div>
       )}
 
-      {/* Input - Sleek floating design */}
-      <div className="p-4">
+      {/* Input form */}
+      <div className="p-4 border-t border-neutral-200 dark:border-neutral-800">
         <form onSubmit={handleSubmit} className="max-w-3xl mx-auto bg-white dark:bg-neutral-900 rounded-lg shadow-sm border border-neutral-200 dark:border-neutral-800 overflow-hidden">
           <div className="flex items-center">
             <input
