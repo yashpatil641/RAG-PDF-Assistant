@@ -7,6 +7,7 @@ import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { TaskType } from "@google/generative-ai";
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { weaviateStore } from "./store";
 
 const queue = new Queue("file-upload-q", {
   connection: {
@@ -26,23 +27,18 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// Load environment variables
 dotenv.config();
 
-// Create Express app
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Welcome to the API" });
 });
 
-// Health check endpoint
 app.get("/api/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "ok" });
 });
@@ -64,7 +60,6 @@ app.post(
     );
     return res.status(200).json({
       message: "File uploaded successfully",
-      // file: req.file,
     });
   }
 );
@@ -98,13 +93,11 @@ app.post("/api/chat", async (req: Request, res: Response) => {
 		apiKey: process.env.GOOGLE_API_KEY,
   });
 
-  // Batch and stream are also supported
-
   const systemPrompt = `
 	You are a helpful AI assistant that answers questions based solely on the content of a PDF document provided by the user.
 	Only use information from the PDF to answer questions. If something is not mentioned or cannot be inferred from the PDF, clearly say so.
 	explain the concepts that the user asks about in detail, and provide examples if possible.
-	also include imojies in your answers.
+  Include the source of the information in your answer like page number
 	context: ${JSON.stringify(result)}
 	`;
 	const messages = [
@@ -115,6 +108,41 @@ app.post("/api/chat", async (req: Request, res: Response) => {
 	console.log("Response", resp);
 	res.status(200).json({ response: resp });
 
+});
+
+
+
+
+app.post("/api/retrivedata", async (req: Request, res: Response) => {
+
+  const similaritySearchResults = await weaviateStore.similaritySearch(
+    req.body.question,
+    3
+  );
+  
+  for (const doc of similaritySearchResults) {
+    console.log(`* ${doc.pageContent} [${JSON.stringify(doc.metadata, null)}]`);
+  }
+
+  const model = new ChatGoogleGenerativeAI({
+    model: "gemini-2.0-flash",
+    maxOutputTokens: 2048,
+		apiKey: process.env.GOOGLE_API_KEY,
+  });
+  const systemPrompt = `
+	You are a helpful AI assistant that answers questions based solely on the content of a PDF document provided by the user.
+	Only use information from the PDF to answer questions. If something is not mentioned or cannot be inferred from the PDF, clearly say so.
+	explain the concepts that the user asks about in detail, and provide examples if possible.
+  Include the source of the information in your answer like page number
+  context: ${JSON.stringify(similaritySearchResults)}
+	`;
+	const messages = [
+		{ role: "system", content: systemPrompt },
+		{ role: "user", content: req.body.question },
+	];
+	const resp = await model.invoke(messages);
+	console.log("Response", similaritySearchResults);
+	res.status(200).json({ response: resp });
 });
 
 // Start the server

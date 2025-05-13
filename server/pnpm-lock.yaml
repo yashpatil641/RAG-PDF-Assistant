@@ -13,7 +13,7 @@ importers:
         version: 0.24.0
       '@langchain/community':
         specifier: ^0.3.41
-        version: 0.3.41(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.96.0(ws@8.18.1)(zod@3.24.3))(zod@3.24.3))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3))))(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))(@langchain/google-genai@0.2.4(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))(zod@3.24.3))(@qdrant/js-client-rest@1.14.0(typescript@5.8.3))(axios@1.8.4)(ibm-cloud-sdk-core@5.3.2)(ioredis@5.6.1)(jsonwebtoken@9.0.2)(openai@4.96.0(ws@8.18.1)(zod@3.24.3))(pdf-parse@1.1.1)(playwright@1.52.0)(ws@8.18.1)
+        version: 0.3.41(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.96.0(ws@8.18.1)(zod@3.24.3))(zod@3.24.3))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3))))(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))(@langchain/google-genai@0.2.4(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))(zod@3.24.3))(@qdrant/js-client-rest@1.14.0(typescript@5.8.3))(axios@1.8.4)(ibm-cloud-sdk-core@5.3.2)(ioredis@5.6.1)(jsonwebtoken@9.0.2)(openai@4.96.0(ws@8.18.1)(zod@3.24.3))(pdf-parse@1.1.1)(playwright@1.52.0)(weaviate-ts-client@2.2.0(graphql@16.11.0))(ws@8.18.1)
       '@langchain/core':
         specifier: ^0.3.47
         version: 0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3))
@@ -26,6 +26,9 @@ importers:
       '@langchain/textsplitters':
         specifier: ^0.1.0
         version: 0.1.0(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))
+      '@langchain/weaviate':
+        specifier: ^0.1.1
+        version: 0.1.1(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))(graphql@16.11.0)
       bullmq:
         specifier: ^5.49.2
         version: 5.49.2
@@ -50,6 +53,9 @@ importers:
       uuid:
         specifier: ^11.1.0
         version: 11.1.0
+      weaviate-ts-client:
+        specifier: ^2.2.0
+        version: 2.2.0(graphql@16.11.0)
     devDependencies:
       '@types/cors':
         specifier: ^2.8.17
@@ -101,6 +107,11 @@ packages:
   '@google/generative-ai@0.24.0':
     resolution: {integrity: sha512-fnEITCGEB7NdX0BhoYZ/cq/7WPZ1QS5IzJJfC3Tg/OwkvBetMiVJciyaan297OvE4B9Jg1xvo0zIazX/9sGu1Q==}
     engines: {node: '>=18.0.0'}
+
+  '@graphql-typed-document-node/core@3.2.0':
+    resolution: {integrity: sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
   '@ibm-cloud/watsonx-ai@1.6.4':
     resolution: {integrity: sha512-u0fmXagywjLAd3apZTV6kRQAHjWl3bNKv5422mQJsM/MZB5YPjx28tjEbpoORh15RuWjYyO/wHZACRWBBkNhbQ==}
@@ -530,6 +541,12 @@ packages:
     peerDependencies:
       '@langchain/core': '>=0.2.21 <0.4.0'
 
+  '@langchain/weaviate@0.1.1':
+    resolution: {integrity: sha512-ZOxLgTTolgtVLVRpAreBZFl2DlX/e5RMC/9vta7eyCfa3BavhE6KUlxCNAMCIDnn3ZlKaMA4a/4rqiH03SuX8w==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@langchain/core': '>=0.2.21 <0.4.0'
+
   '@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.3':
     resolution: {integrity: sha512-QZHtlVgbAdy2zAqNA9Gu1UpIuI8Xvsd1v8ic6B2pZmeFnFcMWiPLfWXh7TVw4eGEZ/C9TH281KwhVoeQUKbyjw==}
     cpu: [arm64]
@@ -823,6 +840,9 @@ packages:
     resolution: {integrity: sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==}
     engines: {node: '>=12.0.0'}
 
+  cross-fetch@3.2.0:
+    resolution: {integrity: sha512-Q+xVJLoGOeIMXZmbUK4HYk+69cQH6LudR0Vu/pRm2YlU/hDV9CiS0gKUMaWY5f2NeUH9C1nV3bsTlCo0FsTV1Q==}
+
   debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
     peerDependencies:
@@ -933,6 +953,10 @@ packages:
   extend@3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
 
+  extract-files@9.0.0:
+    resolution: {integrity: sha512-CvdFfHkC95B4bBBk36hcEmvdR2awOdhhVUYH6S/zrVj3477zven/fJMYg7121h4T1xHZC+tetUpubpAhxwI7hQ==}
+    engines: {node: ^10.17.0 || ^12.0.0 || >= 13.7.0}
+
   file-type@16.5.4:
     resolution: {integrity: sha512-/yFHK0aGjFEgDJjEKP0pWCplsPFPhwyfwevf/pVxiN0tmE4L9LmwWxWukdJSHdoCli4VgQLehjJtwQBnqmsKcw==}
     engines: {node: '>=10'}
@@ -960,6 +984,10 @@ packages:
 
   form-data-encoder@1.7.2:
     resolution: {integrity: sha512-qfqtYan3rxrnCk1VYaA4H+Ms9xdpPqvLZa6xmMgFvhO32x7/3J/ExcTd6qpxM0vH2GdMI+poehyBZvqfMTto8A==}
+
+  form-data@3.0.3:
+    resolution: {integrity: sha512-q5YBMeWy6E2Un0nMGWMgI65MAKtaylxfNJGJxpGh45YDciZB4epbWpaAfImil6CPAPTYB4sh0URQNDRIZG5F2w==}
+    engines: {node: '>= 6'}
 
   form-data@4.0.0:
     resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
@@ -1016,6 +1044,15 @@ packages:
   gopd@1.2.0:
     resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
     engines: {node: '>= 0.4'}
+
+  graphql-request@5.2.0:
+    resolution: {integrity: sha512-pLhKIvnMyBERL0dtFI3medKqWOz/RhHdcgbZ+hMMIb32mEPa5MJSzS4AuXxfI4sRAu6JVVk5tvXuGfCWl9JYWQ==}
+    peerDependencies:
+      graphql: 14 - 16
+
+  graphql@16.11.0:
+    resolution: {integrity: sha512-mS1lbMsxgQj6hge1XZ6p7GPhbrtFwUFYi3wRzXAC/FmYnyXMTvvI3td3rjmQ2u8ewXueaSvRPWaEcgVVOT9Jnw==}
+    engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
 
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
@@ -1682,6 +1719,10 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
+  weaviate-ts-client@2.2.0:
+    resolution: {integrity: sha512-sOvX1Gt8+u9wIVmiYii26N4KSpZ8jM5fM4DMmtRL6yPNO9u8elsvg5g7eJOwmrICsn1Zt2efxhxuSChI0M8FzQ==}
+    engines: {node: '>=16.0.0'}
+
   web-streams-polyfill@4.0.0-beta.3:
     resolution: {integrity: sha512-QW95TCTaHmsYfHDybGMwO5IJIM93I/6vTRk+daHTWFPhwh+C8Cg7j7XyKrwrj8Ib6vYXe0ocYNrmzY4xAAN6ug==}
     engines: {node: '>= 14'}
@@ -1780,6 +1821,10 @@ snapshots:
 
   '@google/generative-ai@0.24.0': {}
 
+  '@graphql-typed-document-node/core@3.2.0(graphql@16.11.0)':
+    dependencies:
+      graphql: 16.11.0
+
   '@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))':
     dependencies:
       '@langchain/textsplitters': 0.1.0(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))
@@ -1801,7 +1846,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@langchain/community@0.3.41(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.96.0(ws@8.18.1)(zod@3.24.3))(zod@3.24.3))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3))))(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))(@langchain/google-genai@0.2.4(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))(zod@3.24.3))(@qdrant/js-client-rest@1.14.0(typescript@5.8.3))(axios@1.8.4)(ibm-cloud-sdk-core@5.3.2)(ioredis@5.6.1)(jsonwebtoken@9.0.2)(openai@4.96.0(ws@8.18.1)(zod@3.24.3))(pdf-parse@1.1.1)(playwright@1.52.0)(ws@8.18.1)':
+  '@langchain/community@0.3.41(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.96.0(ws@8.18.1)(zod@3.24.3))(zod@3.24.3))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3))))(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))(@langchain/google-genai@0.2.4(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))(zod@3.24.3))(@qdrant/js-client-rest@1.14.0(typescript@5.8.3))(axios@1.8.4)(ibm-cloud-sdk-core@5.3.2)(ioredis@5.6.1)(jsonwebtoken@9.0.2)(openai@4.96.0(ws@8.18.1)(zod@3.24.3))(pdf-parse@1.1.1)(playwright@1.52.0)(weaviate-ts-client@2.2.0(graphql@16.11.0))(ws@8.18.1)':
     dependencies:
       '@browserbasehq/stagehand': 1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.96.0(ws@8.18.1)(zod@3.24.3))(zod@3.24.3)
       '@ibm-cloud/watsonx-ai': 1.6.4(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))
@@ -1825,6 +1870,7 @@ snapshots:
       jsonwebtoken: 9.0.2
       pdf-parse: 1.1.1
       playwright: 1.52.0
+      weaviate-ts-client: 2.2.0(graphql@16.11.0)
       ws: 8.18.1
     transitivePeerDependencies:
       - '@langchain/anthropic'
@@ -1893,6 +1939,15 @@ snapshots:
     dependencies:
       '@langchain/core': 0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3))
       js-tiktoken: 1.0.20
+
+  '@langchain/weaviate@0.1.1(@langchain/core@0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3)))(graphql@16.11.0)':
+    dependencies:
+      '@langchain/core': 0.3.47(openai@4.96.0(ws@8.18.1)(zod@3.24.3))
+      uuid: 10.0.0
+      weaviate-ts-client: 2.2.0(graphql@16.11.0)
+    transitivePeerDependencies:
+      - encoding
+      - graphql
 
   '@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.3':
     optional: true
@@ -2194,6 +2249,12 @@ snapshots:
     dependencies:
       luxon: 3.6.1
 
+  cross-fetch@3.2.0:
+    dependencies:
+      node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
+
   debug@3.2.7:
     dependencies:
       ms: 2.1.3
@@ -2298,6 +2359,8 @@ snapshots:
 
   extend@3.0.2: {}
 
+  extract-files@9.0.0: {}
+
   file-type@16.5.4:
     dependencies:
       readable-web-to-node-stream: 3.0.4
@@ -2326,6 +2389,13 @@ snapshots:
       debug: 4.4.0
 
   form-data-encoder@1.7.2: {}
+
+  form-data@3.0.3:
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      es-set-tostringtag: 2.1.0
+      mime-types: 2.1.35
 
   form-data@4.0.0:
     dependencies:
@@ -2391,6 +2461,18 @@ snapshots:
       path-is-absolute: 1.0.1
 
   gopd@1.2.0: {}
+
+  graphql-request@5.2.0(graphql@16.11.0):
+    dependencies:
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
+      cross-fetch: 3.2.0
+      extract-files: 9.0.0
+      form-data: 3.0.3
+      graphql: 16.11.0
+    transitivePeerDependencies:
+      - encoding
+
+  graphql@16.11.0: {}
 
   has-flag@4.0.0: {}
 
@@ -3034,6 +3116,14 @@ snapshots:
   v8-compile-cache-lib@3.0.1: {}
 
   vary@1.1.2: {}
+
+  weaviate-ts-client@2.2.0(graphql@16.11.0):
+    dependencies:
+      graphql-request: 5.2.0(graphql@16.11.0)
+      uuid: 9.0.1
+    transitivePeerDependencies:
+      - encoding
+      - graphql
 
   web-streams-polyfill@4.0.0-beta.3: {}
 
